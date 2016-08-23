@@ -3,7 +3,8 @@ var appRouter = function (app, Network, passport) {
     //get the top network for a given network version
     app.get("/network/:version", passport.authenticate('bearer', { session: false }), function(req, res) {
         if (!req.params.version) {
-            return res.send({ "status": "error", "message": "missing version" });
+            res.status(400);
+            return res.send("missing version");
         } else {
             Network.findMax(req.params.version, function(err, topNetwork)
             {
@@ -16,7 +17,9 @@ var appRouter = function (app, Network, passport) {
     //post a network to save for a given network version, save if the highest
     app.post("/network", passport.authenticate('bearer', { session: false }), function(req, res){
         if (!req.body.networkGenes || !req.body.eval || !req.body.version) {
-            return res.send({ "status": "error", "message": "missing a parameter" });
+            console.log("Missing a parameter");
+            res.status(400);
+            return res.send("missing a parameter");
         } else {
             Network.findMax(req.body.version, function(err, topNetwork)
             {
