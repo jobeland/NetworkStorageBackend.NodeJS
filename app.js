@@ -1,13 +1,17 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-var mongoose = require('mongoose');
-var passport = require('passport');
-var Strategy = require('passport-http-bearer').Strategy;
+var mongoose = require("mongoose");
+var passport = require("passport");
+var Strategy = require("passport-http-bearer").Strategy;
 
 var apiKey = process.env.API_KEY;
+if(!apiKey){
+	apiKey = "123456789";
+}
+
 var connectionString = process.env.CON_STR;
 if(!connectionString){
-	connectionString = 'mongodb://localhost/test';
+	connectionString = "mongodb://localhost/test";
 }
 
 passport.use(new Strategy(
@@ -23,7 +27,7 @@ passport.use(new Strategy(
 
 mongoose.connect(connectionString);
 
-var Network = require('./models/network');
+var Network = require("./models/network");
   
 var app = express();
 
